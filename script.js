@@ -1,5 +1,5 @@
 const GIST_URL = "https://api.github.com/gists/19ed8886620db9ca1d0ecd21d8b187fb";
-const PAT = "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";
+const PAT = "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";
 
 let allTickets = [];
 

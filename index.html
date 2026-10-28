@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Ticket Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header>
+            <h1>📋 IT Ticket Dashboard</h1>
+            <p>View and manage all store POS issues — Caraga Region Area</p>
+            <div class="actions">
+                <a href="submit.html" class="btn-secondary">➕ New Ticket Form</a>
+                <button id="refreshBtn" class="btn-secondary">🔄 Refresh</button>
+                <select id="filterStatus" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="Open">🟡 Open</option>
+                    <option value="In Progress">🔵 In Progress</option>
+                    <option value="Resolved">🟢 Resolved</option>
+                    <option value="Closed">⚪ Closed</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="stats-row">
+            <div class="stat-card high">
+                <h3>🔴 High Priority</h3>
+                <p id="countHigh">0</p>
+            </div>
+            <div class="stat-card medium">
+                <h3>🟡 Medium</h3>
+                <p id="countMedium">0</p>
+            </div>
+            <div class="stat-card low">
+                <h3>🟢 Low</h3>
+                <p id="countLow">0</p>
+            </div>
+            <div class="stat-card resolved">
+                <h3>✅ Resolved</h3>
+                <p id="countResolved">0</p>
+            </div>
+        </div>
+
+        <div id="ticketsContainer">
+            <p class="loading">Loading tickets...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

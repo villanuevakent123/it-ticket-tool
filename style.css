@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background: #f0f4f8;
+    color: #1e293b;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.form-container, .dashboard-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+h1 { color: #0f4c81; margin-bottom: 10px; }
+p { margin-bottom: 20px; color: #64748b; }
+
+.form-group { margin-bottom: 18px; }
+label { display: block; font-weight: 600; margin-bottom: 6px; }
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.btn-submit {
+    background: #0f4c81;
+    color: white;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+.btn-submit:hover { background: #0c3b66; }
+.btn-secondary {
+    background: #e2e8f0;
+    color: #1e293b;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.success-msg {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f0fdf4;
+    border: 1px solid #86efac;
+    border-radius: 6px;
+    color: #166534;
+}
+
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+}
+.stat-card {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+.stat-card.high { background: #fee2e2; }
+.stat-card.medium { background: #fef3c7; }
+.stat-card.low { background: #dbeafe; }
+.stat-card.resolved { background: #d1fae5; }
+.stat-card p { font-size: 24px; font-weight: bold; margin: 5px 0; }
+
+.ticket-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-left: 5px solid;
+}
+.priority-high { border-left-color: #ef4444; }
+.priority-medium { border-left-color: #f59e0b; }
+.priority-low { border-left-color: #22c55e; }
+
+.ticket-actions { margin-top: 12px; }
+.ticket-actions button { margin-right: 6px; padding: 6px 12px; border-radius: 4px; border: none; cursor: pointer; }
+
+.actions { margin: 15px 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.filter-select { padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; }
+
+.loading { text-align: center; padding: 40px; color: #64748b; }

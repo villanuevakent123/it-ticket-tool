@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Ticket Submission</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>🛠️ IT Support Ticket — POS Issue</h1>
+        <p>Fill out the form below to report a problem. Our IT team will respond shortly.</p>
+        
+        <form id="ticketForm">
+            <div class="form-group">
+                <label for="storeName">Store Name *</label>
+                <input type="text" id="storeName" required placeholder="e.g., Sibagat Branch, Butuan Branch">
+            </div>
+
+            <div class="form-group">
+                <label for="storeLocation">Location / Address *</label>
+                <input type="text" id="storeLocation" required placeholder="Town/City, Province">
+            </div>
+
+            <div class="form-group">
+                <label for="contactPerson">Contact Person *</label>
+                <input type="text" id="contactPerson" required placeholder="Full Name">
+            </div>
+
+            <div class="form-group">
+                <label for="contactNumber">Contact Number *</label>
+                <input type="tel" id="contactNumber" required placeholder="09XX-XXX-XXXX">
+            </div>
+
+            <div class="form-group">
+                <label for="posTerminal">POS Terminal / Machine No.</label>
+                <input type="text" id="posTerminal" placeholder="e.g., POS-03 or Machine 2">
+            </div>
+
+            <div class="form-group">
+                <label for="issueType">Type of Issue *</label>
+                <select id="issueType" required>
+                    <option value="">-- Select Issue Type --</option>
+                    <option value="pos_not_turning_on">POS won't turn on</option>
+                    <option value="printer_issue">Receipt printer problem</option>
+                    <option value="network_offline">No internet / offline</option>
+                    <option value="software_error">POS software error / freeze</option>
+                    <option value="login_problem">Cannot login / password issue</option>
+                    <option value="hardware_damage">Hardware damage</option>
+                    <option value="other">Other — please describe below</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Detailed Description *</label>
+                <textarea id="description" rows="5" required placeholder="What exactly happened? Any error message? When did it start?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="urgency">Urgency Level *</label>
+                <select id="urgency" required>
+                    <option value="low">🟢 Low — minor issue</option>
+                    <option value="medium" selected>🟡 Medium — affecting some operations</option>
+                    <option value="high">🔴 High — cannot transact / fully down</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">📤 Submit Ticket</button>
+            <div id="successMsg" class="success-msg" style="display:none;">
+                ✅ Ticket submitted successfully! Your Ticket ID: <strong id="ticketId"></strong>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('ticketForm');
+        const GIST_URL = "https://api.github.com/gists/REPLACE_WITH_YOUR_GIST_ID"; // Update this later
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const ticket = {
+                id: 'TKT-' + Date.now().toString().slice(-8),
+                storeName: document.getElementById('storeName').value,
+                storeLocation: document.getElementById('storeLocation').value,
+                contactPerson: document.getElementById('contactPerson').value,
+                contactNumber: document.getElementById('contactNumber').value,
+                posTerminal: document.getElementById('posTerminal').value || 'Not specified',
+                issueType: document.getElementById('issueType').value,
+                issueTypeLabel: document.getElementById('issueType').selectedOptions[0].text,
+                description: document.getElementById('description').value,
+                urgency: document.getElementById('urgency').value,
+                urgencyLabel: document.getElementById('urgency').selectedOptions[0].text,
+                status: 'Open',
+                submittedAt: new Date().toLocaleString('en-PH', { timeZone: 'Asia/Manila' })
+            };
+
+            try {
+                // Option A: Use GitHub Gist as lightweight "database"
+                const response = await fetch(GIST_URL);
+                const gist = await response.json();
+                const tickets = JSON.parse(gist.files['tickets.json'].content);
+                tickets.unshift(ticket);
+
+                await fetch(GIST_URL, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': 'token REPLACE_WITH_YOUR_GITHUB_PAT',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        files: {
+                            'tickets.json': {
+                                content: JSON.stringify(tickets, null, 2)
+                            }
+                        }
+                    })
+                });
+
+                document.getElementById('ticketId').textContent = ticket.id;
+                document.getElementById('successMsg').style.display = 'block';
+                form.reset();
+            } catch (err) {
+                // Fallback: Save to browser localStorage for demo
+                const localTickets = JSON.parse(localStorage.getItem('itTickets') || '[]');
+                localTickets.unshift(ticket);
+                localStorage.setItem('itTickets', JSON.stringify(localTickets));
+                
+                document.getElementById('ticketId').textContent = ticket.id + ' (Local)';
+                document.getElementById('successMsg').style.display = 'block';
+                form.reset();
+                alert('Demo mode: Ticket saved locally. Configure GitHub Gist & PAT for cloud saving.');
+            }
+        });
+    </script>
+</body>
+</html>

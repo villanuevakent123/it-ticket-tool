@@ -1,0 +1,17 @@
+[
+  {
+    "id": "TKT-DEMO0001",
+    "storeName": "Sibagat Branch",
+    "storeLocation": "Sibagat, Agusan del Sur",
+    "contactPerson": "Juan Dela Cruz",
+    "contactNumber": "0917-123-4567",
+    "posTerminal": "POS-02",
+    "issueType": "network_offline",
+    "issueTypeLabel": "No internet / offline",
+    "description": "POS cannot connect to network since this morning. Already restarted router but still offline.",
+    "urgency": "high",
+    "urgencyLabel": "🔴 High — cannot transact / fully down",
+    "status": "Open",
+    "submittedAt": "2026-10-28 09:00:00"
+  }
+]
